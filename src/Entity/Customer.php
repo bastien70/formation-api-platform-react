@@ -12,6 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
  * @ApiResource(
@@ -94,8 +95,8 @@ class Customer
      */
     public function getTotalAmount()
     {
-        return array_reduce($this->invoices->toArray(), function($total,$invoice){
-            return $total+$invoice->getAmount();
+        return array_reduce($this->invoices->toArray(), function ($total, $invoice) {
+            return $total + $invoice->getAmount();
         }, 0);
     }
 
@@ -107,9 +108,9 @@ class Customer
      */
     public function getUnpaidAmount()
     {
-        return array_reduce($this->invoices->toArray(), function($total,$invoice){
-            return $total+ ($invoice->getStatus() === "PAID" || $invoice->getStatus() === "CANCELLED" ? 0 : $invoice->getAmount());
-        },0);
+        return array_reduce($this->invoices->toArray(), function ($total, $invoice) {
+            return $total + ($invoice->getStatus() === "PAID" || $invoice->getStatus() === "CANCELLED" ? 0 : $invoice->getAmount());
+        }, 0);
     }
 
     public function getId(): ?int
